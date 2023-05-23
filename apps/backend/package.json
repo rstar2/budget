@@ -1,0 +1,17 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\"",
+    "lint": "TIMING=1 eslint **/*.ts*",
+    "demo": "ts-node index.ts data/2023.05.txt"
+  },
+  "engines": {
+    "node": ">=14.15.0"
+  },
+  "dependencies": {
+    "utils": "*"
+  },
+  "devDependencies": {
+  }
+}

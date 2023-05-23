@@ -1,0 +1,21 @@
+{
+    "private": true,
+    "name": "budget",
+    "scripts": {
+        "dev": "turbo dev",
+        "build": "turbo build",
+        "clean": "turbo clean && rm -rf node_modules",
+        "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\" --ignore-path .gitignore"
+    },
+    "devDependencies": {
+        "prettier": "^2.7.1",
+        "eslint": "^7.32.0",
+        "eslint-config-custom": "*",
+        "turbo": "^1.9.3"
+    },
+    "packageManager": "npm@9.6.6",
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ]
+}
