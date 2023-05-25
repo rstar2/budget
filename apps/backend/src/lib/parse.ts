@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import fs from "node:fs/promises";
 
 import { assertDefined, DayExpenses, MonthExpenses } from "utils";
@@ -32,8 +31,7 @@ export async function parse(contents: string): Promise<MonthExpenses> {
             if (!yearNum || !monthNum) throw new Error(`Not proper month header: ${line}`);
 
             // the months in JS Date are from 0
-            month = new Date(yearNum, monthNum);
-            // console.log(`Header: ${yearNum}.${monthNum} - ${month.toLocaleDateString()}`);
+            month = new Date(yearNum, monthNum - 1);
         } else {
             // parse each day's expenses
             const dayExpensesMatch = line.match(dayExpensesRegex);

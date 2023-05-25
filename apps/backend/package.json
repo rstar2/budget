@@ -4,14 +4,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\"",
     "lint": "TIMING=1 eslint **/*.ts*",
-    "demo": "ts-node index.ts data/2023.05.txt"
+    "demo": "ts-node index.ts data"
   },
   "engines": {
     "node": ">=14.15.0"
   },
   "dependencies": {
+    "fast-glob": "^3.2.12",
     "utils": "*"
-  },
-  "devDependencies": {
   }
 }

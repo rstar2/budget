@@ -1,23 +1,28 @@
-/* eslint-disable no-console */
 import path from "node:path";
 
-import { parseFromFile } from "./src/lib/parse";
+import fg from "fast-glob";
+
 import calculate from "./src/lib/calculate";
+import { parseFromFile } from "./src/lib/parse";
 
 (async () => {
-    let fileName = process.argv[2];
-    fileName = path.resolve(__dirname, fileName);
+    const folderName = path.resolve(__dirname, process.argv[2]);
 
-    const monthExpenses = await parseFromFile(fileName);
-    let perMonth = calculate(monthExpenses);
-    perMonth = +perMonth.toFixed(2);
+    const files = await fg(["*.txt"], { cwd: folderName, absolute: true });
 
-    console.log(
-        `Month expenses for ${monthExpenses.month.toLocaleDateString("en", {
-            year: "numeric",
-            month: "long",
-        })} : ${perMonth}`,
-    );
+    for (const file of files) {
+        const monthExpenses = await parseFromFile(files[i]);
+        let perMonth = calculate(monthExpenses);
+        perMonth = +perMonth.toFixed(2);
+
+        // eslint-disable-next-line no-console
+        console.log(
+            `Month expenses for ${monthExpenses.month.toLocaleDateString("en", {
+                year: "numeric",
+                month: "numeric",
+            })} : ${perMonth}`,
+        );
+    }
 
     process.exit();
 })();
