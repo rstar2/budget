@@ -8,10 +8,10 @@ import { parseFromFile } from "./src/lib/parse";
 (async () => {
     const folderName = path.resolve(__dirname, process.argv[2]);
 
-    const files = await fg(["*.txt"], { cwd: folderName, absolute: true });
+    const files = await fg(["**/*.txt"], { cwd: folderName, absolute: true });
 
     for (const file of files) {
-        const monthExpenses = await parseFromFile(files[i]);
+        const monthExpenses = await parseFromFile(file);
         let perMonth = calculate(monthExpenses);
         perMonth = +perMonth.toFixed(2);
 
