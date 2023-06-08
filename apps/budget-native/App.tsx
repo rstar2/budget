@@ -11,7 +11,7 @@ export default function App() {
                     console.log("Pressed!");
                     alert("Pressed");
                 }}
-                text="Boop"
+                text="Bood"
             />
             <StatusBar style="auto" />
         </View>
