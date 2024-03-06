@@ -1,5 +1,6 @@
 import Firebase, { FirebaseConfig } from "firebase-utils";
 export type { AuthPopupProvider } from "firebase-utils";
+export { parseDocs } from "firebase-utils";
 
 const firebaseConfig: FirebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY!,

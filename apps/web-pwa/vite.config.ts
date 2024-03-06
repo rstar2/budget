@@ -48,8 +48,10 @@ export default defineConfig((/* { mode, command, isSsrBuild, isPreview } */) => 
 
             // for PWA - https://vite-pwa-org.netlify.app/guide/
             VitePWA({
-                // with "autoUpdate" it will auto update
-                registerType: "autoUpdate",
+                // // with "autoUpdate" it will auto update
+                // registerType: "autoUpdate",
+                // with "prompt" in registerSW.tsx the new--version logic is handled
+                registerType: "prompt",
 
                 includeAssets: [
                     "favicon.ico",

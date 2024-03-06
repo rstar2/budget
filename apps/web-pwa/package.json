@@ -11,7 +11,7 @@
     "generate-pwa-assets": "pwa-assets-generator --preset minimal public/logo.svg",
     "deploy": "npm run build && firebase deploy",
     "_deploy:functions": "firebase deploy --only functions",
-    "_deploy:db": "firebase deploy --only firestore",
+    "deploy:db": "firebase deploy --only firestore",
     "deploy:hosting": "firebase deploy --only hosting",
     "_predeploy:hosting": "firebase target:apply hosting web-pwa budgetcalendar"
   },

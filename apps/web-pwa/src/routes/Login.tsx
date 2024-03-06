@@ -51,6 +51,7 @@ const safeParse = (schema: z.Schema, str: string): string => {
     // some simple kind of localization of the zod errors
     // that's enough for this simple case,
     // otherwise can use the "zod-i18n-map" package for  more robust solution
+    // @ts-expect-error (error.minimum and error.maximum are not always defined but it's ok here)
     return i18n.t(error.message, { min: error.minimum, max: error.maximum });
 };
 

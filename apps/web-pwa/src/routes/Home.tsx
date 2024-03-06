@@ -1,8 +1,9 @@
-import { HStack, Heading, VStack, useTheme } from "@chakra-ui/react";
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { BeatLoader } from "react-spinners";
 import { useEffectOnce } from "react-use";
+import { useTranslation } from "react-i18next";
+import { HStack, Heading, VStack, useTheme } from "@chakra-ui/react";
+import { BeatLoader } from "react-spinners";
+import firebase, { parseDocs } from "../firebase";
 
 export default function Home() {
     const theme = useTheme();
@@ -11,15 +12,19 @@ export default function Home() {
     const [data, setData] = useState<string | undefined>();
 
     useEffectOnce(() => {
-        setTimeout(() => {
-            setData("hello");
-        }, 5000);
+        const collection = firebase.collection("data");
+        return firebase.onSnapshot(collection, (snapshot) => {
+            const data = parseDocs(snapshot);
+            setData(JSON.stringify(data));
+        });
     });
 
     return (
         <>
             <VStack height="full">
                 <HStack mb={2} flexShrink={0} width="full" justifyContent="space-between">
+                    <Heading size="md">{t("data")}</Heading>
+
                     {/* show loading until data is valid */}
                     {!data ? (
                         <BeatLoader
@@ -28,7 +33,7 @@ export default function Home() {
                             color={theme.__cssMap["colors.chakra-body-text"].value}
                         />
                     ) : (
-                        <Heading size="md">{t("data")}</Heading>
+                        <Heading size="sm">{data}</Heading>
                     )}
                 </HStack>
             </VStack>
