@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "budgetmaster-6dfd6"
+  },
+  "targets": {
+    "budgetmaster-6dfd6": {
+      "hosting": {
+        "web-pwa": [
+          "budgetcalendar"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
