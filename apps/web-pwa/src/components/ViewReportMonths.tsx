@@ -40,7 +40,7 @@ function ViewReportMonthsImpl({ months }: { months: string[] }) {
                 name: t("label.all"),
                 data: expensesPerMonths.map(({ month, expenses }) => ({
                     month,
-                    amount: expenses.reduce((res, expense) => res + expense.amount, 0),
+                    amount: Math.round(expenses.reduce((res, expense) => res + expense.amount, 0)),
                 })),
             },
         ];

@@ -75,5 +75,5 @@ const renderCustomizedLabel = (cell: PieCell, t: TFunction) => {
     // );
 
     const { percent, payload } = cell;
-    return `${t(`label.type.${payload.type}`)} - ${(percent * 100).toFixed(0)}%`;
+    return `${t(`label.type.${payload.type}`)} - ${Math.round(percent * 100)}%`;
 };
