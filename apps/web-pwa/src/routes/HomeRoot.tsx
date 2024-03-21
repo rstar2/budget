@@ -1,50 +1,27 @@
-import {
-    Box,
-    Container,
-    Drawer,
-    DrawerBody,
-    DrawerContent,
-    DrawerOverlay,
-    HStack,
-    Heading,
-    useDisclosure,
-} from "@chakra-ui/react";
-import { HamburgerIcon } from "@chakra-ui/icons";
-import { Outlet } from "@tanstack/react-router";
-
-import { useTranslation } from "react-i18next";
+import { Container, VStack } from "@chakra-ui/react";
+import { Outlet, useNavigate } from "@tanstack/react-router";
+import HomeFooter from "../components/HomeFooter";
+import { useAuthUser } from "../cache/auth";
+import { AuthUser } from "../types";
+import { useEffect } from "react";
 
 export default function HomeRoot() {
+    const navigate = useNavigate();
+    const authUser = useAuthUser();
+
+    useEffect(() => {
+        if (authUser !== AuthUser.Auth) {
+            navigate({ to: "/" });
+            return;
+        }
+    }, [authUser, navigate]);
+
     return (
-        <Container display="flex" flexDirection="column" maxW="90%">
-            <HeaderWithDrawer />
-            <Box flexGrow={1} overflow="auto" mb={2}>
+        <VStack height="full">
+            <Container flexGrow={1} overflow="auto" mb={2} maxW="90%">
                 <Outlet />
-            </Box>
-        </Container>
-    );
-}
-
-function HeaderWithDrawer({ children }: React.PropsWithChildren) {
-    const { t } = useTranslation();
-    const { isOpen, onToggle, onClose } = useDisclosure();
-
-    return (
-        <>
-            <HStack mb={2} flexShrink={0}>
-                <HamburgerIcon onClick={onToggle} />
-                <Heading>{t("title")}</Heading>
-            </HStack>
-
-            <Drawer isOpen={isOpen} onClose={onClose} placement="left">
-                <DrawerOverlay />
-                <DrawerContent>
-                    <HStack>
-                        <HamburgerIcon onClick={onToggle} />
-                    </HStack>
-                    <DrawerBody>{children}</DrawerBody>
-                </DrawerContent>
-            </Drawer>
-        </>
+            </Container>
+            <HomeFooter />
+        </VStack>
     );
 }

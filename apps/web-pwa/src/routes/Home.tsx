@@ -1,41 +1,58 @@
-import { useState } from "react";
-import { useEffectOnce } from "react-use";
-import { useTranslation } from "react-i18next";
-import { HStack, Heading, VStack, useTheme } from "@chakra-ui/react";
-import { BeatLoader } from "react-spinners";
-import firebase, { parseDocs } from "../firebase";
+import { useMemo } from "react";
+import { Heading, ScaleFade, VStack, useDisclosure, useTheme } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
+import { BeatLoader as Loader } from "react-spinners";
+import { isSameMonth } from "date-fns";
+
+import { AddExpense } from "../components/AddExpense";
+import { useExpenseTypes, useExpenses } from "../cache/expenses";
+import { getExpensesThemeColor } from "../utils";
 
 export default function Home() {
     const theme = useTheme();
-    const { t } = useTranslation();
 
-    const [data, setData] = useState<string | undefined>();
+    const types = useExpenseTypes();
+    const expenses = useExpenses(new Date());
 
-    useEffectOnce(() => {
-        const collection = firebase.collection("data");
-        return firebase.onSnapshot(collection, (snapshot) => {
-            const data = parseDocs(snapshot);
-            setData(JSON.stringify(data));
-        });
-    });
+    const { isOpen: isOpenAdd, onToggle: onToggleAdd } = useDisclosure();
+
+    // calculate only the expenses for this month
+    const monthExpenses = useMemo(() => {
+        if (!expenses) return -1;
+
+        const now = new Date();
+
+        return expenses
+            .filter(({ date }) => isSameMonth(now, date))
+            .reduce((res, expense) => res + expense.amount, 0);
+    }, [expenses]);
 
     return (
         <>
             <VStack height="full">
-                <HStack mb={2} flexShrink={0} width="full" justifyContent="space-between">
-                    <Heading size="md">{t("data")}</Heading>
+                {/* show loading until data is valid */}
+                {!types || !expenses ? (
+                    <Loader
+                        style={{ display: "inline" }}
+                        size={8}
+                        color={theme.__cssMap["colors.chakra-body-text"].value}
+                    />
+                ) : (
+                    <VStack width="full" height="full" justifyContent="space-around">
+                        {/*  Use the `boxSize` prop to change the icon size */}
+                        <AddIcon boxSize={20} onClick={onToggleAdd} />
+                        <ScaleFade initialScale={0.1} in={isOpenAdd}>
+                            <AddExpense />
+                        </ScaleFade>
 
-                    {/* show loading until data is valid */}
-                    {!data ? (
-                        <BeatLoader
-                            style={{ display: "inline" }}
-                            size={8}
-                            color={theme.__cssMap["colors.chakra-body-text"].value}
-                        />
-                    ) : (
-                        <Heading size="sm">{data}</Heading>
-                    )}
-                </HStack>
+                        {/* show if known */}
+                        {monthExpenses >= 0 && (
+                            <Heading color={getExpensesThemeColor(monthExpenses)}>
+                                {monthExpenses}
+                            </Heading>
+                        )}
+                    </VStack>
+                )}
             </VStack>
         </>
     );

@@ -16,10 +16,31 @@ i18n.use(initReactI18next).init({
                 loading: "Loading ...",
                 action: {
                     login: "Login",
+                    logout: "Logout",
+                    add: "Add",
                 },
                 label: {
-                    email: "Email",
-                    password: "Password",
+                    auth: {
+                        email: "Email",
+                        password: "Password",
+                    },
+                    expense: {
+                        amount: "Money",
+                        type: "Type",
+                    },
+
+                    all: "All",
+
+                    type: {
+                        food: "Food",
+                        house: "House",
+                        car: "Car",
+                        Maya: "Maya",
+                        Rumen: "Rumen",
+                        Kasia: "Kasia",
+                        pleasure: "Pleasure",
+                        other: "Other",
+                    },
                 },
                 error: {
                     email: {
@@ -28,6 +49,12 @@ i18n.use(initReactI18next).init({
                     password: {
                         min: "Must be at least {{min}} characters long",
                         max: "Must be less than {{max}} characters long",
+                    },
+
+                    amount: {
+                        required: "Required",
+                        min: "Must be at least {{min}} levs",
+                        max: "Must be less than {{max}} levs",
                     },
                 },
             },

@@ -17,6 +17,7 @@ import {
     WithFieldValue,
     DocumentData,
     Timestamp,
+    QueryDocumentSnapshot,
 } from "firebase/firestore";
 import {
     getAuth,
@@ -188,13 +189,18 @@ export type Doc = Readonly<{
 }>;
 
 /**
+ * Parse a document
+ */
+export const parseDoc = (doc: QueryDocumentSnapshot): Doc => {
+    return { id: doc.id, ...toJS(doc.data()) };
+};
+
+/**
  * Parse any documents
  */
 export const parseDocs = (snapshot: QuerySnapshot): Doc[] => {
     const docs: Doc[] = [];
-    snapshot.forEach((doc) => {
-        docs.push({ id: doc.id, ...toJS(doc.data()) });
-    });
+    snapshot.forEach((doc) => docs.push(parseDoc(doc)));
     return docs;
 };
 
