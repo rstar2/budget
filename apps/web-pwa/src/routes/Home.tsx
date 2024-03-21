@@ -39,16 +39,16 @@ export default function Home() {
                     />
                 ) : (
                     <VStack width="full" height="full" justifyContent="space-around">
-                        {/*  Use the `boxSize` prop to change the icon size */}
-                        <AddIcon boxSize={20} onClick={onToggleAdd} />
+                        {/*  Use the `boxSize` prop to change the icon size -there are chakra sizes 20,24, 28, 32, ... */}
+                        <AddIcon boxSize={44} onClick={onToggleAdd} />
                         <ScaleFade initialScale={0.1} in={isOpenAdd}>
-                            <AddExpense />
+                            <AddExpense onAdd={onToggleAdd} />
                         </ScaleFade>
 
                         {/* show if known */}
                         {monthExpenses >= 0 && (
                             <Heading color={getExpensesThemeColor(monthExpenses)}>
-                                {monthExpenses}
+                                {monthExpenses.toFixed(2)}
                             </Heading>
                         )}
                     </VStack>

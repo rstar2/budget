@@ -27,7 +27,7 @@ const amountSchema = z
     .min(1, { message: "error.amount.min" })
     .max(5000, { message: "error.amount.max" });
 
-export function AddExpense() {
+export function AddExpense({ onAdd }: { onAdd?: () => void }) {
     const { t } = useTranslation();
 
     const types = useExpenseTypes()!;
@@ -68,6 +68,7 @@ export function AddExpense() {
             amount: "",
             amountValidError: "",
         });
+        onAdd?.();
     };
 
     return (

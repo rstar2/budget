@@ -95,8 +95,9 @@ export default defineConfig((/* { mode, command, isSsrBuild, isPreview } */) => 
                     theme_color: "#444466",
                     background_color: "#113344",
                     display: "standalone",
-                    // orientation: "any", "portrait"
-                    orientation: "natural",
+                    // setting orientation fixes it and it cannot be changed,
+                    // not setting a value allows the user to change it by rotating the telephone
+                    // orientation: "any", "natural", "portrait"
                     scope: "/",
                     start_url: "/",
                 },
