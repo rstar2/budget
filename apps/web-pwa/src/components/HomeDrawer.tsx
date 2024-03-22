@@ -10,8 +10,9 @@ import {
 import { CloseIcon } from "@chakra-ui/icons";
 import { useTranslation } from "react-i18next";
 import ViewSettings from "./ViewSettings";
-import ViewReportMonth from "./ViewReportMonth";
-import ViewReportMonths from "./ViewReportMonths";
+import ViewListMonth from "./ViewListMonth";
+import ViewChartMonth from "./ViewChartMonth";
+import ViewChartMonths from "./ViewChartMonths";
 import { HomeDrawerMode } from "../types";
 import { missingHandling } from "../utils";
 
@@ -41,19 +42,28 @@ export default function HomeDrawer({ mode, onClose }: HomeHeaderProps) {
     const handleClose = useCallback(() => history.back(), []);
 
     let view;
+    let header;
     switch (mode) {
         case undefined:
             // this is when drawer is closed
             view = "";
+            header = "title";
             break;
-        case HomeDrawerMode.month:
-            view = <ViewReportMonth />;
+        case HomeDrawerMode.list_month:
+            view = <ViewListMonth />;
+            header = "view.listMonth";
             break;
-        case HomeDrawerMode.months:
-            view = <ViewReportMonths />;
+        case HomeDrawerMode.chart_month:
+            view = <ViewChartMonth />;
+            header = "view.chartMonth";
+            break;
+        case HomeDrawerMode.chart_months:
+            view = <ViewChartMonths />;
+            header = "view.chartMonths";
             break;
         case HomeDrawerMode.settings:
             view = <ViewSettings />;
+            header = "view.settings";
             break;
         default:
             missingHandling(mode);
@@ -62,8 +72,8 @@ export default function HomeDrawer({ mode, onClose }: HomeHeaderProps) {
         <Drawer isOpen={isOpen} onClose={handleClose} placement="left" size="full">
             <DrawerOverlay />
             <DrawerContent>
-                <HStack justifyContent="space-between" px={3} mb={2}>
-                    <Heading>{t("title")}</Heading>
+                <HStack justifyContent="space-between" px={3} m={2}>
+                    <Heading>{t(header)}</Heading>
                     <CloseIcon onClick={handleClose} />
                 </HStack>
                 <DrawerBody> {view} </DrawerBody>

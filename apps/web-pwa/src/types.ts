@@ -18,7 +18,8 @@ export type Expense = ExpenseNew & {
 };
 
 export enum HomeDrawerMode {
-    "month" = "month",
-    "months" = "months",
+    "list_month" = "list_month",
+    "chart_month" = "chart_month",
+    "chart_months" = "chart_months",
     "settings" = "settings",
 }

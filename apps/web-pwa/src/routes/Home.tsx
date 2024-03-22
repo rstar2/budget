@@ -6,7 +6,7 @@ import { isSameMonth } from "date-fns";
 
 import { AddExpense } from "../components/AddExpense";
 import { useExpenseTypes, useExpenses } from "../cache/expenses";
-import { getExpensesThemeColor } from "../utils";
+import { getExpensesThemeColor } from "../colors";
 
 export default function Home() {
     const theme = useTheme();

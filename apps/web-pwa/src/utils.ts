@@ -26,24 +26,45 @@ export function missingHandling(val: never): never {
     throw new Error(`Value ${val} is not handled`);
 }
 
-export function randomColor() {
-    return Array.from({ length: 3 })
-        .map(() => Math.ceil(Math.random() * 255))
-        .map((col) => col.toString(16).padStart(2, "0"))
-        .reduce((res, colHex) => `${res}${colHex}`, "#");
+export function enumKeys<O extends object, K extends keyof O>(obj: O): K[] {
+    return Object.keys(obj).filter((k) => Number.isNaN(+k)) as K[];
 }
 
-const expensesColorMap = Object.entries({
-    "red.900": 6000,
-    "red.600": 5000,
-    "red.300": 4000,
-    "green.800": 3000,
-    "green.400": 2000,
-    "white.900": 0,
-});
+export function enumForEach<O extends object, K extends keyof O>(
+    obj: O,
+    callback: (item: O[K]) => void,
+): void {
+    for (const key of enumKeys(obj)) {
+        callback(obj[key as K]);
+    }
+}
 
-export function getExpensesThemeColor(amount: number): string {
-    // for sure the last one will be matched finally
-    const found = expensesColorMap.find(([_color, breakpoint]) => amount >= breakpoint)!;
-    return found[0];
+export function enumForEachKey<O extends object, K extends keyof O>(
+    obj: O,
+    callback: (item: K) => void,
+): void {
+    for (const key of enumKeys(obj)) {
+        callback(key as K);
+    }
+}
+
+export function enumForEachPair<O extends object, K extends keyof O>(
+    obj: O,
+    callback: (item: O[K], key: K) => void,
+): void {
+    for (const key of enumKeys(obj)) {
+        callback(obj[key as K], key as K);
+    }
+}
+
+export function enumIsIn<O extends ListArgString>(obj: O, str: string): obj is O {
+    return Object.values(obj).includes(str);
+}
+
+export function enumValues<O extends ListArgString>(obj: O): string[] {
+    return Object.values(obj);
+}
+
+export function enumValuesAsSet<O extends ListArgString>(obj: O): Set<string> {
+    return new Set<string>(enumValues(obj));
 }

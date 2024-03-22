@@ -10,14 +10,14 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import { useTranslation } from "react-i18next";
+import { useToken } from "@chakra-ui/react";
 
 import { useExpenseMonths, useExpensesPerMonths } from "../cache/expenses";
-import { getExpensesThemeColor } from "../utils";
-import { useToken } from "@chakra-ui/react";
+import { getExpensesThemeColor } from "../colors";
 
 let recreateKey = 0;
 
-export default function ViewReportMonths() {
+export default function ViewChartMonths() {
     const months = useExpenseMonths();
     const monthsUsed = useRef(months);
 

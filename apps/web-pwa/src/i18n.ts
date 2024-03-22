@@ -42,6 +42,13 @@ i18n.use(initReactI18next).init({
                         other: "Other",
                     },
                 },
+
+                view: {
+                    listMonth: "Month's list",
+                    chartMonth: "Month's chart",
+                    chartMonths: "Months chart",
+                    settings: "Settings",
+                },
                 error: {
                     email: {
                         invalid: "Must be valid email",

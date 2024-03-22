@@ -4,25 +4,22 @@ import { useTranslation, type UseTranslationResponse } from "react-i18next";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 import { useExpenses, useExpenseTypes } from "../cache/expenses";
-import { randomColor } from "../utils";
+import { getTypeColor } from "../colors";
 
 type PieCell = any;
 type TFunction = UseTranslationResponse<any, unknown>["t"];
 
-export default function ViewReportMonth() {
+export default function ViewChartMonth() {
     const { t } = useTranslation();
     const types = useExpenseTypes();
     const expenses = useExpenses(new Date());
 
     const colors = useMemo(() => {
-        if (!types) return {};
-        const colors = {
-            food: "#FF0000",
-            car: "#000000",
-            others: "#00FF00",
-        } as Record<string, string>;
+        const colors = {} as Record<string, string>;
+        if (!types) return colors;
+
         for (const type of types) {
-            colors[type] = colors[type] ?? randomColor();
+            colors[type] = getTypeColor(type);
         }
         return colors;
     }, [types]);
