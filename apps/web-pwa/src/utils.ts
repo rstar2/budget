@@ -57,14 +57,14 @@ export function enumForEachPair<O extends object, K extends keyof O>(
     }
 }
 
-export function enumIsIn<O extends ListArgString>(obj: O, str: string): obj is O {
-    return Object.values(obj).includes(str);
-}
+// export function enumIsIn<O extends ListArgString>(obj: O, str: string): obj is O {
+//     return Object.values(obj).includes(str);
+// }
 
-export function enumValues<O extends ListArgString>(obj: O): string[] {
+export function enumValues<O extends Record<string, string>>(obj: O): string[] {
     return Object.values(obj);
 }
 
-export function enumValuesAsSet<O extends ListArgString>(obj: O): Set<string> {
-    return new Set<string>(enumValues(obj));
-}
+// export function enumValuesAsSet<O extends ListArgString>(obj: O): Set<string> {
+//     return new Set<string>(enumValues(obj));
+// }

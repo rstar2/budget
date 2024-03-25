@@ -75,6 +75,7 @@ function ViewReportMonthsImpl({ months }: { months: string[] }) {
     );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function AmountLabel(props: any) {
     const {
         /* these are default props from recharts */

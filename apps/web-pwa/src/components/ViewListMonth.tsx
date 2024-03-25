@@ -4,7 +4,7 @@ import { ListItem, UnorderedList, Select, VStack, Box, HStack, Text } from "@cha
 
 import { useExpenses, useExpenseTypes } from "../cache/expenses";
 import { getTypeColor } from "../colors";
-import { Expense } from "../types";
+import { compareAsc } from "date-fns";
 
 export default function ViewListMonth() {
     const { t } = useTranslation();
@@ -16,6 +16,9 @@ export default function ViewListMonth() {
     const [filteredExpenses, filteredAmount] = useMemo(() => {
         let result = expenses ?? [];
         if (filterType) result = result?.filter(({ type }) => filterType === type);
+
+        // sort by date
+        result.sort((a, b) => compareAsc(a.date, b.date));
 
         return [result, result.reduce((res, { amount }) => res + amount, 0)];
     }, [expenses, filterType]);

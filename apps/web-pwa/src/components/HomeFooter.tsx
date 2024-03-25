@@ -11,35 +11,37 @@ import { enumValues, missingHandling } from "../utils";
 
 const size = "32px";
 
-const actions = enumValues(HomeDrawerMode).map((mode: HomeDrawerMode) => {
-    let ariaLabel, Icon;
-    switch (mode) {
-        case HomeDrawerMode.list_month:
-            ariaLabel = "Month Expenses";
-            Icon = ListBulletsIcon;
-            break;
-        case HomeDrawerMode.chart_month:
-            ariaLabel = "Month Chart";
-            Icon = ChartPieSliceIcon;
-            break;
-        case HomeDrawerMode.chart_months:
-            ariaLabel = "Months Chart";
-            Icon = ChartLineIcon;
-            break;
-        case HomeDrawerMode.settings:
-            ariaLabel = "Settings";
-            Icon = SettingsIcon;
-            break;
-        default:
-            missingHandling(mode);
-    }
+const actions = enumValues(HomeDrawerMode)
+    // @ts-expect-error (it  is HomeDrawerMode)
+    .map((mode: HomeDrawerMode) => {
+        let ariaLabel, Icon;
+        switch (mode) {
+            case HomeDrawerMode.list_month:
+                ariaLabel = "Month Expenses";
+                Icon = ListBulletsIcon;
+                break;
+            case HomeDrawerMode.chart_month:
+                ariaLabel = "Month Chart";
+                Icon = ChartPieSliceIcon;
+                break;
+            case HomeDrawerMode.chart_months:
+                ariaLabel = "Months Chart";
+                Icon = ChartLineIcon;
+                break;
+            case HomeDrawerMode.settings:
+                ariaLabel = "Settings";
+                Icon = SettingsIcon;
+                break;
+            default:
+                missingHandling(mode);
+        }
 
-    return {
-        ariaLabel,
-        Icon,
-        action: mode,
-    };
-});
+        return {
+            ariaLabel,
+            Icon,
+            action: mode,
+        };
+    });
 export default function HomeFooter() {
     const [drawerMode, setDrawerMode] = useState<HomeDrawerMode>();
 
