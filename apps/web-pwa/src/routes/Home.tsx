@@ -40,7 +40,7 @@ export default function Home() {
                 ) : (
                     <VStack width="full" height="full" justifyContent="space-around">
                         {/*  Use the `boxSize` prop to change the icon size -there are chakra sizes 20,24, 28, 32, ... */}
-                        <AddIcon mt={4} boxSize={44} onClick={onToggleAdd} />
+                        <AddIcon mt={10} boxSize={44} onClick={onToggleAdd} />
                         <ScaleFade initialScale={0.1} in={isOpenAdd}>
                             <AddExpense onAdd={onToggleAdd} />
                         </ScaleFade>

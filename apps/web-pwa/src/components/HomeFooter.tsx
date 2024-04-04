@@ -57,6 +57,7 @@ export default function HomeFooter() {
             <HStack justifyContent="space-around" width="full" mb={2}>
                 {actions.map((action) => (
                     <IconButton
+                        key={action.action}
                         aria-label={action.ariaLabel}
                         icon={
                             <action.Icon

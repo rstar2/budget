@@ -32,6 +32,10 @@ firebase.onAuthStateChanged((user) => {
                 return res;
             }, {} as Record<string, Expense[]>);
 
+            // if current month still has no expenses then add empty
+            const thisMonth = getMonth(new Date());
+            if (!expensesMonthMap[thisMonth]) expensesMonthMap[thisMonth] = [];
+
             const months: string[] = [];
             // cache each month expenses
             Object.entries(expensesMonthMap).forEach(([month, expenses]) => {
