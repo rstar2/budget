@@ -21,11 +21,16 @@ export function getExpensesThemeColor(amount: number): string {
 }
 
 const typesColorMap = {
-    food: "#FF0000",
-    car: "#000000",
+    food: "#6BABAA",
+    car: "#fecdf",
     others: "#00FF00",
+    Rumen: "#FF0000",
+    Maya: "#00FF00",
+    Kasia: "0000FF",
 } as Record<string, string>;
 
+const gray = "gray.900";
+
 export function getTypeColor(type: string): string {
-    return typesColorMap[type] ?? randomColor();
+    return typesColorMap[type] ?? gray; //randomColor();
 }

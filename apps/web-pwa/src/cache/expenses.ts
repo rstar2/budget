@@ -59,7 +59,8 @@ function getMonth(date: Date): string {
 }
 
 /**
- * Query for the expenses months.
+ * Query for the expenses months,
+ * e.g. all possible months when an expense has been made.
  */
 export function useExpenseMonths() {
     const { data } = useQuery<string[]>({
@@ -73,7 +74,7 @@ export function useExpenseMonths() {
 }
 
 /**
- * Query for the Expenses state.
+ * Query for the expenses for the given months.
  * @param months the months whose expenses to get
  */
 export function useExpensesPerMonths(months: string[]) {
@@ -90,7 +91,7 @@ export function useExpensesPerMonths(months: string[]) {
 }
 
 /**
- * Query for the Expenses state.
+ * Query for the all the expenses for given single month.
  * @param dateOrMonth the date for which month will get expenses
  */
 export function useExpenses(dateOrMonth: Date | string) {
@@ -105,7 +106,7 @@ export function useExpenses(dateOrMonth: Date | string) {
 }
 
 /**
- * Query for the Expenses state.
+ * Query for the all expenses types (food/car/Rumen/Kasia/...).
  */
 export function useExpenseTypes() {
     const { data } = useQuery<ExpenseType[]>({

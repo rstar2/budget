@@ -5,7 +5,11 @@ import { queryClient } from "./index";
 import { AuthUser } from "../types";
 
 firebase.onAuthStateChanged((user) => {
-    queryClient.setQueryData<AuthUser>(["authUser"], user ? AuthUser.Auth : AuthUser.NotAuth);
+    //console.warn("??? onAuthStateChanged", user);
+    queryClient.setQueryData<AuthUser>(
+        ["authUser"],
+        user ? AuthUser.Auth : user === false ? AuthUser.Unknown : AuthUser.NotAuth,
+    );
 });
 
 /**

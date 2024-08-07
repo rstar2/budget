@@ -5,6 +5,7 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 import { useExpenses, useExpenseTypes } from "../cache/expenses";
 import { getTypeColor } from "../colors";
+import { ExpenseType } from "../types";
 
 type PieCell = any;
 type TFunction = UseTranslationResponse<any, unknown>["t"];
@@ -24,15 +25,24 @@ export default function ViewChartMonth() {
         return colors;
     }, [types]);
 
+    const aggregatedExpenses = useMemo(() => {
+        return expenses?.reduce((aggregated, expense) => {
+            const forType = aggregated.find(({ type }) => type === expense.type);
+            if (forType) forType.amount = forType.amount + expense.amount;
+            else aggregated.push(expense);
+            return aggregated;
+        }, [] as Array<{ type: ExpenseType; amount: number }>);
+    }, [expenses]);
+
     const renderLabel = useCallback((cell: PieCell) => renderCustomizedLabel(cell, t), [t]);
 
-    if (!expenses || !types) return <Loader />;
+    if (!aggregatedExpenses || !types) return <Loader />;
     return (
         <>
             <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                     <Pie
-                        data={expenses}
+                        data={aggregatedExpenses}
                         dataKey="amount"
                         cx="50%"
                         cy="50%"
@@ -41,7 +51,7 @@ export default function ViewChartMonth() {
                         label={renderLabel}
                         labelLine={false}
                     >
-                        {expenses.map(({ type }) => (
+                        {aggregatedExpenses.map(({ type }) => (
                             <Cell key={type} fill={colors[type]} />
                         ))}
                     </Pie>

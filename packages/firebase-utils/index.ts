@@ -27,10 +27,11 @@ import {
     signInWithCredential,
     Auth,
     User,
-    NextOrObserver,
+    NextFn,
     GoogleAuthProvider,
     FacebookAuthProvider,
     EmailAuthProvider,
+    getIdToken,
 } from "firebase/auth";
 
 export type FirebaseConfig = {
@@ -73,8 +74,23 @@ class Firebase {
 
     // ---------- Auth ------------
 
-    onAuthStateChanged(onNext: NextOrObserver<User>): Unsubscribe {
-        return onAuthStateChanged(this.auth, onNext);
+    onAuthStateChanged(onNext: NextFn<User | null | false>): Unsubscribe {
+        // return onAuthStateChanged(this.auth, onNext);
+
+        return onAuthStateChanged(this.auth, (user) => {
+            if (!user) return onNext(null);
+
+            // force to refresh - e.g will call really Firebase service
+            getIdToken(user, true)
+                .then(() => {
+                    console.log("???", "authorized");
+                    onNext(user);
+                })
+                .catch((error) => {
+                    console.log("???", "NOT authorized:", error.message);
+                    onNext(false);
+                });
+        });
     }
 
     async signInWithPopup(provider: AuthPopupProvider = "google"): Promise<void> {
